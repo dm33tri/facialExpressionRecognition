@@ -1,0 +1,3 @@
+include ':TorchVisionCameraLib'
+include ':app'
+rootProject.name = "TorchVision Camera"
