@@ -70,11 +70,7 @@ public class MainActivity extends AppCompatActivity {
     protected void bindUseCases() {
         preview = new Preview.Builder().build();
         preview.setSurfaceProvider(previewView.getSurfaceProvider());
-        faceAnalyzer = FaceAnalyzer.buildAnalysis(
-                ContextCompat.getMainExecutor(this),
-                null,
-                overlayView
-        );
+        faceAnalyzer = FaceAnalyzer.buildAnalysis(this, overlayView);
 
         UseCaseGroup useCaseGroup = new UseCaseGroup.Builder()
                 .addUseCase(preview)

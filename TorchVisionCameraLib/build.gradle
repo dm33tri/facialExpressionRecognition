@@ -32,6 +32,6 @@ dependencies {
     implementation "androidx.camera:camera-view:1.0.0-alpha14"
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.mlkit:face-detection:16.0.7'
-    implementation 'org.pytorch:pytorch_android:1.4.0'
-    implementation 'org.pytorch:pytorch_android_torchvision:1.4.0'
+    implementation 'org.pytorch:pytorch_android:1.9.0-SNAPSHOT'
+    implementation 'org.pytorch:pytorch_android_torchvision:1.9.0-SNAPSHOT'
 }
