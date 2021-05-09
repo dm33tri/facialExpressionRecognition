@@ -5,14 +5,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.ByteBuffer;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Matrix;
+import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.RectF;
 import android.media.Image;
-import android.util.Log;
 import android.util.Size;
 
 import androidx.annotation.NonNull;
@@ -21,6 +20,7 @@ import androidx.camera.core.ImageAnalysis.Analyzer;
 import androidx.camera.core.ImageProxy;
 
 import com.google.mlkit.vision.common.InputImage;
+import com.google.mlkit.vision.face.Face;
 import com.google.mlkit.vision.face.FaceDetection;
 import com.google.mlkit.vision.face.FaceDetector;
 import com.google.mlkit.vision.face.FaceDetectorOptions;
@@ -28,8 +28,6 @@ import com.google.mlkit.vision.face.FaceDetectorOptions;
 import org.pytorch.IValue;
 import org.pytorch.Module;
 import org.pytorch.Tensor;
-import org.pytorch.torchvision.TensorImageUtils;
-
 
 public class FaceAnalyzer implements Analyzer {
     private Context context;
@@ -47,6 +45,8 @@ public class FaceAnalyzer implements Analyzer {
         this.module = Module.load(unpackModel());
     }
 
+    private final static String[] classes = { "Angry", "Disgust", "Fear", "Happy", "Sad", "Surprised", "Neutral" };
+
     @Override
     @androidx.camera.core.ExperimentalGetImage
     public void analyze(@NonNull ImageProxy imageProxy) {
@@ -59,16 +59,19 @@ public class FaceAnalyzer implements Analyzer {
             detector.process(image)
                 .addOnSuccessListener((faces) -> {
                     if (faces.size() > 0) {
-                        Rect bounds = faces.get(0).getBoundingBox();
-                        overlayView.setImageSize(new Size(imageProxy.getHeight(), imageProxy.getWidth()));
-                        overlayView.setRect(new RectF(bounds));
+                        Rect bounds = getFaceRect(faces.get(0), image.getWidth(), image.getHeight());
 
                         inputTensor = getTensor(mediaImage, bounds);
+                        Tensor outputTensor = module.forward(IValue.from(inputTensor)).toTensor();
 
-                        Tensor output = module.forward(IValue.from(inputTensor)).toTensor();
-                        Log.d("res", output.toString());
+                        overlayView.setImageSize(new Size(imageProxy.getHeight(), imageProxy.getWidth()));
+                        overlayView.setRect(new RectF(bounds));
+                        overlayView.setLabel(getResult(outputTensor));
+                        overlayView.setCroppedFace(getImage(mediaImage, bounds));
                     } else {
                         overlayView.setRect(null);
+                        overlayView.setLabel(null);
+                        overlayView.setCroppedFace(null);
                     }
                 })
                 .addOnCompleteListener((err) -> {
@@ -77,16 +80,54 @@ public class FaceAnalyzer implements Analyzer {
         }
     }
 
-    private Bitmap cropImage(InputImage image, Rect bounds) {
-        int width = bounds.width();
-        int height = bounds.height();
-        Matrix transform = new Matrix();
-        transform.setScale(44f / width, 44f / height);
-        return Bitmap.createBitmap(image.getBitmapInternal(), bounds.left, bounds.top, width, height, transform, true);
+    private Rect getFaceRect(Face face, int width, int height) {
+        Rect bounds = face.getBoundingBox();
+        bounds.left = Math.max(0, bounds.left - 20);
+        bounds.right = Math.min(width, bounds.right + 20);
+        bounds.top = Math.max(0, bounds.top - 20);
+        bounds.bottom = Math.min(height, bounds.bottom + 20);
+        return bounds;
+    }
+
+    private String getResult(Tensor outputTensor) {
+        float[] arr = outputTensor.getDataAsFloatArray();
+        int maxIndex = 0;
+        float max = arr[maxIndex];
+        for (int i = 1; i < 7; ++i) {
+            if (arr[i] > max) {
+                maxIndex = i;
+                max = arr[i];
+            }
+        }
+
+        return classes[maxIndex];
     }
 
     private Tensor getTensor(Image image, Rect face) {
+        int[] buffer = getImage(image, face);
+        float[] floatBuffer = new float[buffer.length];
+        for (int i = 0; i < buffer.length; ++i) {
+            floatBuffer[i] = Color.valueOf(buffer[i]).luminance();
+        }
+        return Tensor.fromBlob(floatBuffer, new long[] { 1, 1, 44, 44 });
+    }
 
+    private int[] getImage(Image image, Rect face) {
+        ByteBuffer byteBuffer = image.getPlanes()[0].getBuffer();
+        int[] buffer = new int[44 * 44];
+        int width = face.width();
+        int height = face.height();
+        int xStep = width / 44;
+        int yStep = height / 44;
+        int rowStride = image.getPlanes()[0].getRowStride();
+        int colStride = image.getPlanes()[0].getPixelStride();
+        for (int x = face.left, targetX = 0; targetX < 44; x += xStep, targetX++) {
+            for (int y = face.top, targetY = 0; targetY < 44; y += yStep, targetY++) {
+                int lum = byteBuffer.get((image.getHeight() - x) * rowStride + (image.getWidth() - y) * colStride) & 0xFF;
+                buffer[targetY * 44 + targetX] = 0xff000000 | lum << 16 | lum << 8 | lum;
+            }
+        }
+        return buffer;
     }
 
     private String unpackModel() {

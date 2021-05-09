@@ -1,6 +1,7 @@
 package ru.hse.d_shcherbakov1.torchvisioncameralib;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -12,10 +13,13 @@ import android.view.View;
 public class OverlayView extends View {
     private final Object lock = new Object();
     private final Paint paint;
+    private final Paint textPaint;
     private Size imageSize;
     private RectF rect;
     private float xOffset;
     private float scale;
+    private String label;
+    private int[] croppedFace;
 
     public OverlayView(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -23,6 +27,10 @@ public class OverlayView extends View {
         paint.setColor(Color.RED);
         paint.setStrokeWidth(5);
         paint.setStyle(Paint.Style.STROKE);
+
+        textPaint = new Paint();
+        textPaint.setColor(Color.RED);
+        textPaint.setTextSize(48);
     }
 
     public void setImageSize(Size imageSize) {
@@ -35,6 +43,20 @@ public class OverlayView extends View {
     public void setRect(RectF rect) {
         synchronized (lock) {
             this.rect = rect;
+        }
+        postInvalidate();
+    }
+
+    public void setLabel(String label) {
+        synchronized (lock) {
+            this.label = label;
+        }
+        postInvalidate();
+    }
+
+    public void setCroppedFace(int[] data) {
+        synchronized (lock) {
+            this.croppedFace = data;
         }
         postInvalidate();
     }
@@ -68,12 +90,27 @@ public class OverlayView extends View {
         }
     }
 
+    private void drawLabel(Canvas canvas) {
+        if (this.label != null && this.rect != null) {
+            canvas.drawText(this.label, 50, 50, textPaint);
+        }
+    }
+
+    private void drawFace(Canvas canvas) {
+        if (this.croppedFace != null) {
+            Bitmap bitmap = Bitmap.createBitmap(this.croppedFace, 44, 44, Bitmap.Config.ARGB_8888);
+            canvas.drawBitmap(bitmap, null, new RectF(getWidth() - 500, 100, getWidth() - 100, 500), paint);
+        }
+    }
+
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         synchronized (lock) {
             updateTransform();
             drawRect(canvas);
+            drawLabel(canvas);
+            drawFace(canvas);
         }
     }
 }
