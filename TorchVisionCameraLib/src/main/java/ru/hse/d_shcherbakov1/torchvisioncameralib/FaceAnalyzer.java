@@ -123,7 +123,7 @@ public class FaceAnalyzer implements Analyzer {
         int colStride = image.getPlanes()[0].getPixelStride();
         for (int x = face.left, targetX = 0; targetX < 44; x += xStep, targetX++) {
             for (int y = face.top, targetY = 0; targetY < 44; y += yStep, targetY++) {
-                int lum = byteBuffer.get((image.getHeight() - x) * rowStride + (image.getWidth() - y) * colStride) & 0xFF;
+                int lum = byteBuffer.get(x * rowStride + (image.getWidth() - y) * colStride) & 0xFF;
                 buffer[targetY * 44 + targetX] = 0xff000000 | lum << 16 | lum << 8 | lum;
             }
         }
