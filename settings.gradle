@@ -1,3 +1,3 @@
-include ':TorchVisionCameraLib'
-include ':app'
-rootProject.name = "TorchVision Camera"
+include ':facialExpressionRecognitionLib'
+include ':facialExpressionRecognitionApp'
+rootProject.name = "facialExpressionRecognition"

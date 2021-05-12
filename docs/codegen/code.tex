@@ -1,0 +1,216 @@
+\documentclass[11pt,a4paper]{report}
+\usepackage{color}
+\usepackage{ifthen}
+\usepackage{makeidx}
+\usepackage{ifpdf}
+\usepackage[headings]{fullpage}
+\usepackage{listings}
+\lstset{language=Java,breaklines=true}
+\ifpdf \usepackage[pdftex, pdfpagemode={UseOutlines},bookmarks,colorlinks,linkcolor={blue},plainpages=false,pdfpagelabels,citecolor={red},breaklinks=true]{hyperref}
+  \usepackage[pdftex]{graphicx}
+  \pdfcompresslevel=9
+  \DeclareGraphicsRule{*}{mps}{*}{}
+\else
+  \usepackage[dvips]{graphicx}
+\fi
+
+\newcommand{\entityintro}[3]{%
+  \hbox to \hsize{%
+    \vbox{%
+      \hbox to .2in{}%
+    }%
+    {\bf  #1}%
+    \dotfill\pageref{#2}%
+  }
+  \makebox[\hsize]{%
+    \parbox{.4in}{}%
+    \parbox[l]{5in}{%
+      \vspace{1mm}%
+      #3%
+      \vspace{1mm}%
+    }%
+  }%
+}
+\newcommand{\refdefined}[1]{
+\expandafter\ifx\csname r@#1\endcsname\relax
+\relax\else
+{$($in \ref{#1}, page \pageref{#1}$)$}\fi}
+\date{\today}
+\chardef\textbackslash=`\\
+\makeindex
+\begin{document}
+\sloppy
+\addtocontents{toc}{\protect\markboth{Contents}{Contents}}
+\tableofcontents
+\chapter{Package ru.hse.d\_shcherbakov1.facialExpressionRecognition}{
+\label{ru.hse.d_shcherbakov1.facialExpressionRecognition}\hskip -.05in
+\hbox to \hsize{\textit{ Package Contents\hfil Page}}
+\vskip .13in
+\hbox{{\bf  Classes}}
+\entityintro{CameraFeedAnalyzer}{ru.hse.d_shcherbakov1.facialExpressionRecognition.CameraFeedAnalyzer}{}
+\entityintro{FaceAnalyzer}{ru.hse.d_shcherbakov1.facialExpressionRecognition.FaceAnalyzer}{}
+\entityintro{OverlayView}{ru.hse.d_shcherbakov1.facialExpressionRecognition.OverlayView}{}
+\vskip .1in
+\vskip .1in
+\section{\label{ru.hse.d_shcherbakov1.facialExpressionRecognition.CameraFeedAnalyzer}\index{CameraFeedAnalyzer}Class CameraFeedAnalyzer}{
+\vskip .1in 
+\subsection{Declaration}{
+\begin{lstlisting}[frame=none]
+public class CameraFeedAnalyzer
+ extends java.lang.Object\end{lstlisting}
+\subsection{Constructor summary}{
+\begin{verse}
+{\bf CameraFeedAnalyzer(Context, OverlayView)} \\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf analyze(ImageProxy)} \\
+{\bf buildAnalysis(Context, OverlayView)} \\
+\end{verse}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{CameraFeedAnalyzer(Context, OverlayView)}
+{\bf  CameraFeedAnalyzer}\\
+\begin{lstlisting}[frame=none]
+public CameraFeedAnalyzer(Context context,OverlayView overlayView)\end{lstlisting} %end signature
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{analyze(ImageProxy)}
+{\bf  analyze}\\
+\begin{lstlisting}[frame=none]
+public void analyze(ImageProxy imageProxy)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{buildAnalysis(Context, OverlayView)}
+{\bf  buildAnalysis}\\
+\begin{lstlisting}[frame=none]
+public static ImageAnalysis buildAnalysis(Context context,OverlayView overlayView)\end{lstlisting} %end signature
+}%end item
+\end{itemize}
+}
+}
+\section{\label{ru.hse.d_shcherbakov1.facialExpressionRecognition.FaceAnalyzer}\index{FaceAnalyzer}Class FaceAnalyzer}{
+\vskip .1in 
+\subsection{Declaration}{
+\begin{lstlisting}[frame=none]
+public class FaceAnalyzer
+ extends java.lang.Object\end{lstlisting}
+\subsection{Constructor summary}{
+\begin{verse}
+{\bf FaceAnalyzer(Context, OverlayView)} \\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf analyze(ImageProxy)} \\
+{\bf buildAnalysis(Context, OverlayView)} \\
+\end{verse}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{FaceAnalyzer(Context, OverlayView)}
+{\bf  FaceAnalyzer}\\
+\begin{lstlisting}[frame=none]
+public FaceAnalyzer(Context context,OverlayView overlayView)\end{lstlisting} %end signature
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{analyze(ImageProxy)}
+{\bf  analyze}\\
+\begin{lstlisting}[frame=none]
+public void analyze(ImageProxy imageProxy)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{buildAnalysis(Context, OverlayView)}
+{\bf  buildAnalysis}\\
+\begin{lstlisting}[frame=none]
+public static ImageAnalysis buildAnalysis(Context context,OverlayView overlayView)\end{lstlisting} %end signature
+}%end item
+\end{itemize}
+}
+}
+\section{\label{ru.hse.d_shcherbakov1.facialExpressionRecognition.OverlayView}\index{OverlayView}Class OverlayView}{
+\vskip .1in 
+\subsection{Declaration}{
+\begin{lstlisting}[frame=none]
+public class OverlayView
+ extends View\end{lstlisting}
+\subsection{Constructor summary}{
+\begin{verse}
+{\bf OverlayView(Context, AttributeSet)} \\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf onDraw(Canvas)} \\
+{\bf setCroppedFace(int\lbrack \rbrack )} \\
+{\bf setImageSize(Size)} \\
+{\bf setLabel(String)} \\
+{\bf setRect(RectF)} \\
+\end{verse}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{OverlayView(Context, AttributeSet)}
+{\bf  OverlayView}\\
+\begin{lstlisting}[frame=none]
+public OverlayView(Context context,AttributeSet attrs)\end{lstlisting} %end signature
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{onDraw(Canvas)}
+{\bf  onDraw}\\
+\begin{lstlisting}[frame=none]
+protected void onDraw(Canvas canvas)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setCroppedFace(int\lbrack \rbrack )}
+{\bf  setCroppedFace}\\
+\begin{lstlisting}[frame=none]
+public void setCroppedFace(int[] data)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setImageSize(Size)}
+{\bf  setImageSize}\\
+\begin{lstlisting}[frame=none]
+public void setImageSize(Size imageSize)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setLabel(String)}
+{\bf  setLabel}\\
+\begin{lstlisting}[frame=none]
+public void setLabel(java.lang.String label)\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setRect(RectF)}
+{\bf  setRect}\\
+\begin{lstlisting}[frame=none]
+public void setRect(RectF rect)\end{lstlisting} %end signature
+}%end item
+\end{itemize}
+}
+}
+}
+\printindex
+\end{document}

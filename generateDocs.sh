@@ -1,0 +1,1 @@
+javadoc -docletpath lib/TeXDoclet.jar -doclet org.stfm.texdoclet.TeXDoclet -sourcepath facialExpressionRecognitionLib/src/main/java -output docs/codegen/code.tex -subpackages ru
