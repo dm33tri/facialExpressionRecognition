@@ -7,7 +7,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.nio.ByteBuffer;
 
-import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Rect;
 import android.graphics.RectF;
@@ -30,16 +29,14 @@ import org.pytorch.Module;
 import org.pytorch.Tensor;
 
 public class CameraFeedAnalyzer implements Analyzer {
-    private Context context;
-    private OverlayView overlayView;
+    private CameraFeedView cameraFeedView;
     private FaceDetectorOptions options;
     private FaceDetector detector;
     private Module module;
     private Tensor inputTensor;
 
-    public CameraFeedAnalyzer(Context context, OverlayView overlayView) {
-        this.context = context;
-        this.overlayView = overlayView;
+    public CameraFeedAnalyzer(CameraFeedView cameraFeedView) {
+        this.cameraFeedView = cameraFeedView;
         this.options = new FaceDetectorOptions.Builder().build();
         this.detector = FaceDetection.getClient(options);
         this.module = Module.load(unpackModel());
@@ -57,26 +54,26 @@ public class CameraFeedAnalyzer implements Analyzer {
             mediaImage.setCropRect(cropRect);
             InputImage image = InputImage.fromMediaImage(mediaImage, imageProxy.getImageInfo().getRotationDegrees());
             detector.process(image)
-                    .addOnSuccessListener((faces) -> {
-                        if (faces.size() > 0) {
-                            Rect bounds = getFaceRect(faces.get(0), image.getWidth(), image.getHeight());
+                .addOnSuccessListener((faces) -> {
+                    if (faces.size() > 0) {
+                        Rect bounds = getFaceRect(faces.get(0), image.getWidth(), image.getHeight());
 
-                            inputTensor = getTensor(mediaImage, bounds);
-                            Tensor outputTensor = module.forward(IValue.from(inputTensor)).toTensor();
+                        inputTensor = getTensor(mediaImage, bounds);
+                        Tensor outputTensor = module.forward(IValue.from(inputTensor)).toTensor();
 
-                            overlayView.setImageSize(new Size(imageProxy.getHeight(), imageProxy.getWidth()));
-                            overlayView.setRect(new RectF(bounds));
-                            overlayView.setLabel(getResult(outputTensor));
-                            overlayView.setCroppedFace(getImage(mediaImage, bounds));
-                        } else {
-                            overlayView.setRect(null);
-                            overlayView.setLabel(null);
-                            overlayView.setCroppedFace(null);
-                        }
-                    })
-                    .addOnCompleteListener((err) -> {
-                        imageProxy.close();
-                    });
+                        cameraFeedView.setImageSize(new Size(imageProxy.getHeight(), imageProxy.getWidth()));
+                        cameraFeedView.setRect(new RectF(bounds));
+                        cameraFeedView.setLabel(getResult(outputTensor));
+                        cameraFeedView.setFaceImage(getImage(mediaImage, bounds));
+                    } else {
+                        cameraFeedView.setRect(null);
+                        cameraFeedView.setLabel(null);
+                        cameraFeedView.setFaceImage(null);
+                    }
+                })
+                .addOnCompleteListener((err) -> {
+                    imageProxy.close();
+                });
         }
     }
 
@@ -123,20 +120,24 @@ public class CameraFeedAnalyzer implements Analyzer {
         int colStride = image.getPlanes()[0].getPixelStride();
         for (int x = face.left, targetX = 0; targetX < 44; x += xStep, targetX++) {
             for (int y = face.top, targetY = 0; targetY < 44; y += yStep, targetY++) {
-                int lum = byteBuffer.get(x * rowStride + (image.getWidth() - y) * colStride) & 0xFF;
-                buffer[targetY * 44 + targetX] = 0xff000000 | lum << 16 | lum << 8 | lum;
+                if (x >= image.getHeight() || y >= image.getHeight()) {
+                    buffer[targetY * 44 + targetX] = 0xffffffff;
+                } else {
+                    int lum = byteBuffer.get(x * rowStride + (image.getWidth() - y) * colStride) & 0xFF;
+                    buffer[targetY * 44 + targetX] = 0xff000000 | lum << 16 | lum << 8 | lum;
+                }
             }
         }
         return buffer;
     }
 
     private String unpackModel() {
-        File file = new File(context.getFilesDir(), "model.pt");
+        File file = new File(cameraFeedView.getContext().getFilesDir(), "model.pt");
         if (file.exists() && file.length() > 0) {
             return file.getAbsolutePath();
         }
 
-        try (InputStream is = context.getAssets().open("model.pt")) {
+        try (InputStream is = cameraFeedView.getContext().getAssets().open("model.pt")) {
             try (OutputStream os = new FileOutputStream(file)) {
                 byte[] buffer = new byte[4 * 1024];
                 int read;
@@ -151,10 +152,10 @@ public class CameraFeedAnalyzer implements Analyzer {
         return null;
     }
 
-    public static ImageAnalysis buildAnalysis(Context context, OverlayView overlayView) {
+    public static ImageAnalysis buildAnalysis(CameraFeedView cameraFeedView) {
         ImageAnalysis analysis = new ImageAnalysis.Builder().build();
-        FaceAnalyzer faceAnalyzer = new FaceAnalyzer(context, overlayView);
-        analysis.setAnalyzer(context.getMainExecutor(), faceAnalyzer);
+        CameraFeedAnalyzer faceAnalyzer = new CameraFeedAnalyzer(cameraFeedView);
+        analysis.setAnalyzer(cameraFeedView.getContext().getMainExecutor(), faceAnalyzer);
         return analysis;
     }
 }

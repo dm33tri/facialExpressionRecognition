@@ -49,7 +49,7 @@
 \hbox{{\bf  Classes}}
 \entityintro{CameraFeedAnalyzer}{ru.hse.d_shcherbakov1.facialExpressionRecognition.CameraFeedAnalyzer}{}
 \entityintro{FaceAnalyzer}{ru.hse.d_shcherbakov1.facialExpressionRecognition.FaceAnalyzer}{}
-\entityintro{OverlayView}{ru.hse.d_shcherbakov1.facialExpressionRecognition.OverlayView}{}
+\entityintro{OverlayView}{ru.hse.d_shcherbakov1.facialExpressionRecognition.OverlayView}{Виджет для отображения рамки вокруг лица и надписи с названием текущей эмоции}
 \vskip .1in
 \vskip .1in
 \section{\label{ru.hse.d_shcherbakov1.facialExpressionRecognition.CameraFeedAnalyzer}\index{CameraFeedAnalyzer}Class CameraFeedAnalyzer}{
@@ -146,10 +146,11 @@ public static ImageAnalysis buildAnalysis(Context context,OverlayView overlayVie
 }
 \section{\label{ru.hse.d_shcherbakov1.facialExpressionRecognition.OverlayView}\index{OverlayView}Class OverlayView}{
 \vskip .1in 
+Виджет для отображения рамки вокруг лица и надписи с названием текущей эмоции\vskip .1in 
 \subsection{Declaration}{
 \begin{lstlisting}[frame=none]
 public class OverlayView
- extends View\end{lstlisting}
+ extends PreviewView\end{lstlisting}
 \subsection{Constructor summary}{
 \begin{verse}
 {\bf OverlayView(Context, AttributeSet)} \\
@@ -157,11 +158,11 @@ public class OverlayView
 }
 \subsection{Method summary}{
 \begin{verse}
-{\bf onDraw(Canvas)} \\
-{\bf setCroppedFace(int\lbrack \rbrack )} \\
-{\bf setImageSize(Size)} \\
-{\bf setLabel(String)} \\
-{\bf setRect(RectF)} \\
+{\bf onDraw(Canvas)} Метод жизненного цикла для рисования виджета\\
+{\bf setFaceImage(int\lbrack \rbrack )} \\
+{\bf setImageSize(Size)} Задать размер изображения с камеры\\
+{\bf setLabel(String)} Задать надпись\\
+{\bf setRect(RectF)} Задать прямоугольник с рамкой вокруг лица\\
 \end{verse}
 }
 \subsection{Constructors}{
@@ -183,30 +184,79 @@ public OverlayView(Context context,AttributeSet attrs)\end{lstlisting} %end sign
 {\bf  onDraw}\\
 \begin{lstlisting}[frame=none]
 protected void onDraw(Canvas canvas)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Метод жизненного цикла для рисования виджета
+}
+\end{itemize}
 }%end item
 \item{ 
-\index{setCroppedFace(int\lbrack \rbrack )}
-{\bf  setCroppedFace}\\
+\index{setFaceImage(int\lbrack \rbrack )}
+{\bf  setFaceImage}\\
 \begin{lstlisting}[frame=none]
-public void setCroppedFace(int[] data)\end{lstlisting} %end signature
+public void setFaceImage(int[] data)\end{lstlisting} %end signature
 }%end item
 \item{ 
 \index{setImageSize(Size)}
 {\bf  setImageSize}\\
 \begin{lstlisting}[frame=none]
 public void setImageSize(Size imageSize)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Задать размер изображения с камеры
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{imageSize} -- размер изображения}
+  \end{itemize}
+}%end item
+\end{itemize}
 }%end item
 \item{ 
 \index{setLabel(String)}
 {\bf  setLabel}\\
 \begin{lstlisting}[frame=none]
 public void setLabel(java.lang.String label)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Задать надпись
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{label} -- надпись}
+  \end{itemize}
+}%end item
+\end{itemize}
 }%end item
 \item{ 
 \index{setRect(RectF)}
 {\bf  setRect}\\
 \begin{lstlisting}[frame=none]
 public void setRect(RectF rect)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Задать прямоугольник с рамкой вокруг лица
+}
+\item{
+{\bf  Parameters}
+  \begin{itemize}
+   \item{
+\texttt{rect} -- прямоугольник}
+  \end{itemize}
+}%end item
+\end{itemize}
 }%end item
 \end{itemize}
 }
