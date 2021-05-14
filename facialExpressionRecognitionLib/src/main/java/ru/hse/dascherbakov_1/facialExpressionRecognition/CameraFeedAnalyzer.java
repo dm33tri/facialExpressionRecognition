@@ -14,6 +14,7 @@ import android.media.Image;
 import android.util.Size;
 
 import androidx.annotation.NonNull;
+import androidx.camera.core.AspectRatio;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageAnalysis.Analyzer;
 import androidx.camera.core.ImageProxy;
@@ -29,6 +30,8 @@ import org.pytorch.Module;
 import org.pytorch.Tensor;
 
 public class CameraFeedAnalyzer implements Analyzer {
+    private final static String[] classes = { "Angry", "Disgust", "Fear", "Happy", "Sad", "Surprised", "Neutral" };
+
     private final CameraFeedView cameraFeedView;
     private final FaceDetector detector;
     private final Module module;
@@ -40,16 +43,15 @@ public class CameraFeedAnalyzer implements Analyzer {
         this.module = Module.load(unpackModel());
     }
 
-    private final static String[] classes = { "Angry", "Disgust", "Fear", "Happy", "Sad", "Surprised", "Neutral" };
-
     @Override
     @androidx.camera.core.ExperimentalGetImage
     public void analyze(@NonNull ImageProxy imageProxy) {
         Rect cropRect = imageProxy.getCropRect();
         Image mediaImage = imageProxy.getImage();
+        FacialExpressionViewModel viewModel = cameraFeedView.getViewModel();
 
         if (mediaImage != null) {
-            FacialExpressionViewModel viewModel = cameraFeedView.getViewModel();
+            viewModel.setImageSize(new Size(imageProxy.getHeight(), imageProxy.getWidth()));
             mediaImage.setCropRect(cropRect);
             InputImage image = InputImage.fromMediaImage(mediaImage, imageProxy.getImageInfo().getRotationDegrees());
             detector.process(image)
@@ -60,7 +62,6 @@ public class CameraFeedAnalyzer implements Analyzer {
                         Tensor inputTensor = getTensor(mediaImage, bounds);
                         Tensor outputTensor = module.forward(IValue.from(inputTensor)).toTensor();
 
-                        viewModel.setImageSize(new Size(imageProxy.getHeight(), imageProxy.getWidth()));
                         viewModel.setFaceRect(new RectF(bounds));
                         viewModel.setLabel(getResult(outputTensor));
                     } else {
@@ -76,25 +77,25 @@ public class CameraFeedAnalyzer implements Analyzer {
 
     private Rect getFaceRect(Face face, int width, int height) {
         Rect bounds = face.getBoundingBox();
-        bounds.left = Math.max(0, bounds.left - 20);
-        bounds.right = Math.min(width, bounds.right + 20);
-        bounds.top = Math.max(0, bounds.top - 20);
-        bounds.bottom = Math.min(height, bounds.bottom + 20);
+        bounds.left = Math.max(0, bounds.left - 10);
+        bounds.right = Math.min(width, bounds.right + 10);
+        bounds.top = Math.max(0, bounds.top - 10);
+        bounds.bottom = Math.min(height, bounds.bottom + 10);
         return bounds;
     }
 
     private String getResult(Tensor outputTensor) {
         float[] arr = outputTensor.getDataAsFloatArray();
-        int maxIndex = 0;
-        float max = arr[maxIndex];
-        for (int i = 1; i < 7; ++i) {
-            if (arr[i] > max) {
-                maxIndex = i;
-                max = arr[i];
+
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < 7; ++i) {
+            if (arr[i] >= 1) {
+                stringBuilder.append(classes[i]);
+                stringBuilder.append(' ');
             }
         }
 
-        return classes[maxIndex];
+        return stringBuilder.toString();
     }
 
     private Tensor getTensor(Image image, Rect face) {
@@ -150,7 +151,9 @@ public class CameraFeedAnalyzer implements Analyzer {
     }
 
     public static ImageAnalysis buildAnalysis(CameraFeedView cameraFeedView) {
-        ImageAnalysis analysis = new ImageAnalysis.Builder().build();
+        int width = cameraFeedView.getView().getWidth();
+        int height = cameraFeedView.getView().getHeight();
+        ImageAnalysis analysis = new ImageAnalysis.Builder().setTargetResolution(new Size(width, height)).build();
         CameraFeedAnalyzer faceAnalyzer = new CameraFeedAnalyzer(cameraFeedView);
         analysis.setAnalyzer(cameraFeedView.getContext().getMainExecutor(), faceAnalyzer);
         return analysis;

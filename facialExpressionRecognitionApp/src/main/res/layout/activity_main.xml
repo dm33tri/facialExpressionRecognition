@@ -19,6 +19,6 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="text"
-            android:textColor="@color/white" android:textSize="48dp"/>
+            android:textColor="@color/white" android:textSize="16dp"/>
     </LinearLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

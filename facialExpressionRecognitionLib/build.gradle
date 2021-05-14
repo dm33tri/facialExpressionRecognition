@@ -3,6 +3,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        dm33triAndroidKey {
+            storeFile file('/Users/dm33tri/dm33triAndroidKey')
+            storePassword '/Users/dm33tri/dm33triAndroidKeyPassword'
+            keyAlias 'dm33triAndroidKey'
+            keyPassword 'It\'sOver9000!'
+        }
+    }
     compileSdkVersion 29
     buildToolsVersion "30.0.3"
 

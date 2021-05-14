@@ -8,10 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
-import androidx.camera.core.CameraSelector;
-import androidx.camera.core.ImageAnalysis;
-import androidx.camera.core.Preview;
-import androidx.camera.core.UseCaseGroup;
+import androidx.camera.core.*;
 import androidx.camera.lifecycle.ProcessCameraProvider;
 import androidx.camera.view.PreviewView;
 import androidx.core.app.ActivityCompat;
@@ -65,7 +62,6 @@ public class CameraFeedView extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstance) {
         super.onActivityCreated(savedInstance);
-        requestPermissions();
         initCamera();
     }
 
@@ -76,7 +72,7 @@ public class CameraFeedView extends Fragment {
         ListenableFuture<ProcessCameraProvider> cameraProviderFeature = ProcessCameraProvider.getInstance(getActivity());
         cameraProviderFeature.addListener(() -> {
             if (!checkPermissions()) {
-                return;
+                requestPermissions();
             }
             try {
                 cameraProvider = cameraProviderFeature.get();

@@ -14,7 +14,6 @@
         android:theme="@style/Theme.facialExpressionRecognitionAppTheme">
         <activity
             android:name="ru.hse.dascherbakov_1.facialExpressionRecognition.MainActivity"
-            android:label="@string/title_activity_main"
             android:theme="@style/Theme.facialExpressionRecognitionAppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
