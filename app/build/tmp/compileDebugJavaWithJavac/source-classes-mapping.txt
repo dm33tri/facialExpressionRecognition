@@ -1,4 +1,0 @@
-ru/hse/d_shcherbakov1/TorchVisionCamera/MainActivity.java
- ru.hse.d_shcherbakov1.TorchVisionCamera.MainActivity
-ru/hse/d_shcherbakov1/TorchVisionCamera/BuildConfig.java
- ru.hse.d_shcherbakov1.TorchVisionCamera.BuildConfig

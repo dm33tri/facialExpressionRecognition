@@ -1,2 +1,0 @@
-ru/hse/d_shcherbakov1/TorchVisionCamera/test/BuildConfig.java
- ru.hse.d_shcherbakov1.TorchVisionCamera.test.BuildConfig
