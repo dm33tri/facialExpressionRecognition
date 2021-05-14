@@ -6,7 +6,7 @@
         android:id="@+id/previewView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-    <ru.hse.d_shcherbakov1.facialExpressionRecognition.OverlayView
+    <ru.hse.dascherbakov_1.facialExpressionRecognition.OverlayView
         android:id="@+id/overlayView"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

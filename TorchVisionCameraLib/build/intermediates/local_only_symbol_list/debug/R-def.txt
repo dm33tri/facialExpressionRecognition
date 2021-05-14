@@ -1,0 +1,12 @@
+R_DEF: Internal format may change without notice
+local
+attr? exampleColor
+attr? exampleDimension
+attr? exampleDrawable
+attr? exampleString
+color gray_400
+color gray_600
+color light_blue_400
+color light_blue_600
+style Widget.Theme.TorchVisionCamera.MyView
+styleable OverlayView exampleString exampleDimension exampleColor exampleDrawable

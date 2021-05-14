@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="gray_400">#FFBDBDBD</color>
+    <color name="gray_600">#FF757575</color>
+    <color name="light_blue_400">#FF29B6F6</color>
+    <color name="light_blue_600">#FF039BE5</color>
+    <style name="Widget.Theme.TorchVisionCamera.MyView" parent="">
+        <item name="android:background">@color/gray_400</item>
+        <item name="exampleColor">@color/light_blue_400</item>
+    </style>
+    <declare-styleable name="OverlayView">
+        <attr format="string" name="exampleString"/>
+        <attr format="dimension" name="exampleDimension"/>
+        <attr format="color" name="exampleColor"/>
+        <attr format="color|reference" name="exampleDrawable"/>
+    </declare-styleable>
+</resources>
