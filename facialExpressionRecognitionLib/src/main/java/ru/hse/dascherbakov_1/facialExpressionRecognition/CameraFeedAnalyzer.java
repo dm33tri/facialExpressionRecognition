@@ -14,7 +14,6 @@ import android.media.Image;
 import android.util.Size;
 
 import androidx.annotation.NonNull;
-import androidx.camera.core.AspectRatio;
 import androidx.camera.core.ImageAnalysis;
 import androidx.camera.core.ImageAnalysis.Analyzer;
 import androidx.camera.core.ImageProxy;
