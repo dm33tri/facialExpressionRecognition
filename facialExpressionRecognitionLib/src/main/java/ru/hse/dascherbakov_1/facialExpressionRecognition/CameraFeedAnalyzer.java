@@ -29,7 +29,7 @@ import org.pytorch.Module;
 import org.pytorch.Tensor;
 
 public class CameraFeedAnalyzer implements Analyzer {
-    private final static String[] classes = { "Angry", "Disgust", "Fear", "Happy", "Sad", "Surprised", "Neutral" };
+    public final static String[] classes = { "Angry", "Disgust", "Fear", "Happy", "Sad", "Surprised", "Neutral" };
 
     private final CameraFeedView cameraFeedView;
     private final FaceDetector detector;
@@ -60,9 +60,11 @@ public class CameraFeedAnalyzer implements Analyzer {
 
                         Tensor inputTensor = getTensor(mediaImage, bounds);
                         Tensor outputTensor = module.forward(IValue.from(inputTensor)).toTensor();
+                        float[] output = getResult(outputTensor);
 
                         viewModel.setFaceRect(new RectF(bounds));
-                        viewModel.setLabel(getResult(outputTensor));
+                        viewModel.setOutput(output);
+                        viewModel.setLabel(getStringResult(output));
                     } else {
                         viewModel.setFaceRect(null);
                         viewModel.setLabel(null);
@@ -83,18 +85,21 @@ public class CameraFeedAnalyzer implements Analyzer {
         return bounds;
     }
 
-    private String getResult(Tensor outputTensor) {
-        float[] arr = outputTensor.getDataAsFloatArray();
-
-        StringBuilder stringBuilder = new StringBuilder();
-        for (int i = 0; i < 7; ++i) {
-            if (arr[i] >= 1) {
-                stringBuilder.append(classes[i]);
-                stringBuilder.append(' ');
+    private String getStringResult(float[] output) {
+        int maxIndex = 0;
+        float max = output[maxIndex];
+        for (int i = 1; i < 7; ++i) {
+            if (output[i] >= max) {
+                max = output[i];
+                maxIndex = i;
             }
         }
 
-        return stringBuilder.toString();
+        return classes[maxIndex];
+    }
+
+    private float[] getResult(Tensor outputTensor) {
+        return outputTensor.getDataAsFloatArray();
     }
 
     private Tensor getTensor(Image image, Rect face) {
@@ -130,9 +135,6 @@ public class CameraFeedAnalyzer implements Analyzer {
 
     private String unpackModel() {
         File file = new File(cameraFeedView.getContext().getFilesDir(), "model.pt");
-        if (file.exists() && file.length() > 0) {
-            return file.getAbsolutePath();
-        }
 
         try (InputStream is = cameraFeedView.getContext().getAssets().open("model.pt")) {
             try (OutputStream os = new FileOutputStream(file)) {

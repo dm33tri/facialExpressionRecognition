@@ -5,20 +5,32 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
     <LinearLayout
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <androidx.fragment.app.FragmentContainerView
-            android:id="@+id/cameraFeedView"
-            android:name="ru.hse.dascherbakov_1.facialExpressionRecognition.CameraFeedView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" android:layout_weight="1"/>
         <TextView
+            android:padding="10dp"
             android:id="@+id/textView"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:text="text"
-            android:textColor="@color/white" android:textSize="16dp"/>
+            android:layout_gravity="center"
+            android:scaleType="fitCenter"
+            tools:srcCompat="@tools:sample/avatars"/>
     </LinearLayout>
+    <Button
+        android:id="@+id/button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" android:text="Show results" app:layout_anchor="@+id/linearLayout"
+        app:layout_anchorGravity="bottom|left"/>
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/cameraFeedView"
+        android:name="ru.hse.dascherbakov_1.facialExpressionRecognition.CameraFeedView"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        app:layout_anchor="@+id/linearLayout" app:layout_anchorGravity="bottom|right"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

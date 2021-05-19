@@ -117,4 +117,8 @@ public class CameraFeedView extends Fragment {
 
         cameraProvider.bindToLifecycle(ProcessLifecycleOwner.get(), cameraSelector, useCaseGroup);
     }
+
+    public void setOnClickListener(View.OnClickListener listener) {
+        overlayView.setOnClickListener(listener);
+    }
 }

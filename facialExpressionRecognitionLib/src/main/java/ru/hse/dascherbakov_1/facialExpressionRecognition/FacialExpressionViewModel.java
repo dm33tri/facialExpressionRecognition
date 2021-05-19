@@ -10,6 +10,7 @@ public class FacialExpressionViewModel extends ViewModel {
     private final MutableLiveData<String> label = new MutableLiveData<>("");
     private final MutableLiveData<RectF> faceRect = new MutableLiveData<>();
     private final MutableLiveData<Size> imageSize = new MutableLiveData<>();
+    private final MutableLiveData<float[]> output = new MutableLiveData<>();
 
     public void setFaceRect(RectF faceRect) {
         this.faceRect.setValue(faceRect);
@@ -33,5 +34,13 @@ public class FacialExpressionViewModel extends ViewModel {
 
     public LiveData<Size> getImageSize() {
         return imageSize;
+    }
+
+    public void setOutput(float[] output) {
+        this.output.setValue(output);
+    }
+
+    public LiveData<float[]> getOutput() {
+        return output;
     }
 }
