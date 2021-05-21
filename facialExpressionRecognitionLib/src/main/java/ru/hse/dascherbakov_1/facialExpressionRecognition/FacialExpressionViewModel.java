@@ -19,39 +19,61 @@ public class FacialExpressionViewModel extends ViewModel {
      * Размер обрабатываемого изображения
      */
     private final MutableLiveData<Size> imageSize = new MutableLiveData<>();
-    /**
-     * Вектор с вероятностями эмоций
-     */
+
     private final MutableLiveData<float[]> output = new MutableLiveData<>();
 
+    /**
+     * Записать прямоугольник границ лица
+     */
     public void setFaceRect(RectF faceRect) {
         this.faceRect.setValue(faceRect);
     }
 
+    /**
+     * Получить прямоугольник границ лица
+     */
     public MutableLiveData<RectF> getFaceRect() {
         return faceRect;
     }
 
+    /**
+     * Записать название эмоции
+     */
     public void setLabel(String label) {
         this.label.setValue(label);
     }
 
+    /**
+     * Получить название эмоции
+     */
     public LiveData<String> getLabel() {
         return label;
     }
 
+    /**
+     * Записать размер изображения
+     */
     public void setImageSize(Size imageSize) {
         this.imageSize.setValue(imageSize);
     }
 
+    /**
+     * Получить размер изображения
+     */
     public LiveData<Size> getImageSize() {
         return imageSize;
     }
 
+    /**
+     * Записать вектор с вероятностями эмоций
+     */
     public void setOutput(float[] output) {
         this.output.setValue(output);
     }
 
+    /**
+     * Получить вектор с вероятностями эмоций
+     */
     public LiveData<float[]> getOutput() {
         return output;
     }

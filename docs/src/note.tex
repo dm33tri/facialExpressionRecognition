@@ -3,7 +3,7 @@
 \usepackage{cite}
 
 \begin{document}
-    \docNumber{RU.17701729.04.06-01 81 01-1}
+    \docNumber{RU.17701729.04.06-01 34 01-1}
     \docFormat{Пояснительная записка}
     \student{БПИ 199}{Д.А. Щербаков}
     \project{Модуль для мобильных приложений для определения эмоционального отклика по изображению пользователя.}
@@ -49,7 +49,7 @@
 
     \section{Назначение и область применения}
 
-    \subsection{Назначение программы }
+    \subsection{Назначение программы}
 
     \subsubsection{Функциональное назначение}
     Модуль позволяет определить эмоции человека на изображении по заданной шкале эмоций.
@@ -145,6 +145,12 @@
     Впоследствии этот вектор можно интерпретировать по-разному, например, выбрать самое большое число в качестве главной эмоции, или выбрать только те значения, что выше какого-либо порога.
     В приведенном примере программы выбирается наибольшее число и конвертируется в строку -- например, первому значению соответствует эмоция ''Злость''.
 
+    \begin{figure}[h]
+        \caption{Схема работы программного модуля}
+        \centering
+        \includegraphics[width=0.75\textwidth]{flow}
+    \end{figure}
+
     \subsection{Описание и обоснование выбора метода организации входных и выходных данных}
 
     \subsubsection{Описание метода организации входных и выходных данных}
@@ -160,19 +166,21 @@
 
     Полученный с помощью Softmax вектор с весами различных классов -- стандартная практика при решении задач классификации.
 
-    \subsection{Описание и обоснование выбора состава технических и программных средств}
-
     \subsubsection{Состав технических и программных средств}
     Для работы программного модуля необходим следующий набор программных средств:
-    \begin{enumerate}
+    \begin{itemize}
         \item операционная система Android версии 8.0 и выше
-    \end{enumerate}
+    \end{itemize}
 
     Для работы программного модуля необходим следующий состав технических средств:
-    \begin{enumerate}
+    \begin{itemize}
         \item Не менее 512МБ ОЗУ;
         \item Не менее 150МБ свободного места на внутреннем накопителе;
-    \end{enumerate}
+    \end{itemize}
+
+    Для анализа изображения с камеры необходимо наличие на устройстве фронтальной камеры.
+
+    \subsection{Описание и обоснование выбора состава технических и программных средств}
 
     Минимальное количество памяти ОЗУ, необходимое для работы системы Android 8.0 и выше составляет 512МБ~\cite{AndroidReq}.
 
@@ -224,7 +232,7 @@
     \end{itemize}
 
     \addition{Описание и функциональное назначение классов и структур}
-
+    \addtocontents{toc}{\protect\setcounter{tocdepth}{0}}
     \newcommand{\entityintro}[3]{%
         \hbox to \hsize{%
             \vbox{%
@@ -248,10 +256,7 @@
         {$($in \ref{#1}, page \pageref{#1}$)$}\fi}
     \date{\today}
     \chardef\textbackslash=`\\
-    \begin{document}
         \sloppy
-        \addtocontents{toc}{\protect\markboth{Contents}{Contents}}
-        \chapter{Пакет ru.hse.dascherbakov\_1.facialExpressionRecognition}{
             \label{ru.hse.dascherbakov_1.facialExpressionRecognition}\hskip -.05in
             \vskip .13in
             \hbox{{\bf  Классы}}
@@ -260,38 +265,26 @@
             \entityintro{FacialExpressionViewModel}{ru.hse.dascherbakov_1.facialExpressionRecognition.FacialExpressionViewModel}{}
             \vskip .1in
             \vskip .1in
-            \section{\label{ru.hse.dascherbakov_1.facialExpressionRecognition.CameraFeedAnalyzer}\index{CameraFeedAnalyzer}Class CameraFeedAnalyzer}{
+            \section{\label{ru.hse.dascherbakov_1.facialExpressionRecognition.CameraFeedAnalyzer}\index{CameraFeedAnalyzer} CameraFeedAnalyzer}{
                 \vskip .1in
                 Класс анализатора изображения\vskip .1in
                 \subsection{Определение}{
                     \begin{lstlisting}[frame=none]
 public class CameraFeedAnalyzer
  extends java.lang.Object\end{lstlisting}
-                    \subsection{Поля}{
-                        \begin{verse}
-                        {\bf классы} \\
-                        \end{verse}
-                    }
-                    \subsection{Конструктор}{
+
+                    \subsection{Краткое описание конструкторов}{
                         \begin{verse}
                         {\bf CameraFeedAnalyzer(CameraFeedView)} \\
                         \end{verse}
                     }
-                    \subsection{Методы}{
+                    \subsection{Краткое описание методов}{
                         \begin{verse}
                         {\bf analyze(ImageProxy)} Основной метод для анализа\\
                         {\bf buildAnalysis(CameraFeedView)} Получить анализатор для подключения к камере\\
                         \end{verse}
                     }
-                    \subsection{Поля}{
-                        \begin{itemize}
-                            \item{ ``` t
-                                \index{классы}
-                                \label{ru.hse.dascherbakov_1.facialExpressionRecognition.CameraFeedAnalyzer.классы}\texttt{public static final java.lang.String\lbrack \rbrack \ {\bf  classes}}
-                            }
-                        \end{itemize}
-                    }
-                    \subsection{Constructors}{
+                    \subsection{Конструкторы}{
                         \vskip -2em
                         \begin{itemize}
                             \item{
@@ -334,19 +327,19 @@ public static ImageAnalysis buildAnalysis(CameraFeedView cameraFeedView)\end{lst
                         \end{itemize}
                     }
                 }
-                \section{\label{ru.hse.dascherbakov_1.facialExpressionRecognition.CameraFeedView}\index{CameraFeedView}Class CameraFeedView}{
+                \section{\label{ru.hse.dascherbakov_1.facialExpressionRecognition.CameraFeedView}\index{CameraFeedView}CameraFeedView}{
                     \vskip .1in
                     Фрагмент для предпросмотра изображения с камеры и анализа эмоций по изображению лица в реальном времени\vskip .1in
                     \subsection{Определение}{
                         \begin{lstlisting}[frame=none]
 public class CameraFeedView
  extends Fragment\end{lstlisting}
-                        \subsection{Конструктор}{
+                        \subsection{Краткое описание конструкторов}{
                             \begin{verse}
                             {\bf CameraFeedView()} \\
                             \end{verse}
                         }
-                        \subsection{Методы}{
+                        \subsection{Краткое описание методов}{
                             \begin{verse}
                             {\bf getViewModel()} Получение класса ViewModel\\
                             {\bf onActivityCreated(Bundle)} Завершение создания фрагмента\\
@@ -355,7 +348,7 @@ public class CameraFeedView
                             {\bf setOnClickListener(View.OnClickListener)} \\
                             \end{verse}
                         }
-                        \subsection{Constructors}{
+                        \subsection{Конструкторы}{
                             \vskip -2em
                             \begin{itemize}
                                 \item{
@@ -430,30 +423,30 @@ public void setOnClickListener(View.OnClickListener listener)\end{lstlisting} %e
                             \end{itemize}
                         }
                     }
-                    \section{\label{ru.hse.dascherbakov_1.facialExpressionRecognition.FacialExpressionViewModel}\index{FacialExpressionViewModel}Class FacialExpressionViewModel}{
+                    \section{\label{ru.hse.dascherbakov_1.facialExpressionRecognition.FacialExpressionViewModel}\index{FacialExpressionViewModel}FacialExpressionViewModel}{
                         \vskip .1in
                         \subsection{Определение}{
                             \begin{lstlisting}[frame=none]
 public class FacialExpressionViewModel
  extends ViewModel\end{lstlisting}
-                            \subsection{Конструктор}{
+                            \subsection{Краткое описание конструкторов}{
                                 \begin{verse}
                                 {\bf FacialExpressionViewModel()} \\
                                 \end{verse}
                             }
-                            \subsection{Методы}{
+                            \subsection{Краткое описание методов}{
                                 \begin{verse}
-                                {\bf getFaceRect()} \\
-                                {\bf getImageSize()} \\
-                                {\bf getLabel()} \\
-                                {\bf getOutput()} \\
-                                {\bf setFaceRect(RectF)} \\
-                                {\bf setImageSize(Size)} \\
-                                {\bf setLabel(String)} \\
-                                {\bf setOutput(float\lbrack \rbrack )} \\
+                                {\bf getFaceRect()} Получить прямоугольник границ лица\\
+                                {\bf getImageSize()} Получить размер изображения\\
+                                {\bf getLabel()} Получить название эмоции\\
+                                {\bf getOutput()} Получить вектор с вероятностями эмоций\\
+                                {\bf setFaceRect(RectF)} Записать прямоугольник границ лица\\
+                                {\bf setImageSize(Size)} Записать размер изображения\\
+                                {\bf setLabel(String)} Записать название эмоции\\
+                                {\bf setOutput(float\lbrack \rbrack )} Записать вектор с вероятностями эмоций\\
                                 \end{verse}
                             }
-                            \subsection{Constructors}{
+                            \subsection{Конструкторы}{
                                 \vskip -2em
                                 \begin{itemize}
                                     \item{
@@ -472,51 +465,106 @@ public FacialExpressionViewModel()\end{lstlisting} %end signature
                                         {\bf  getFaceRect}\\
                                         \begin{lstlisting}[frame=none]
 public <any> getFaceRect()\end{lstlisting} %end signature
+                                        \begin{itemize}
+                                            \item{
+                                                    {\bf  Описание}
+
+                                                Получить прямоугольник границ лица
+                                            }
+                                        \end{itemize}
                                     }%end item
                                     \item{
                                         \index{getImageSize()}
                                         {\bf  getImageSize}\\
                                         \begin{lstlisting}[frame=none]
 public <any> getImageSize()\end{lstlisting} %end signature
+                                        \begin{itemize}
+                                            \item{
+                                                    {\bf  Описание}
+
+                                                Получить размер изображения
+                                            }
+                                        \end{itemize}
                                     }%end item
                                     \item{
                                         \index{getLabel()}
                                         {\bf  getLabel}\\
                                         \begin{lstlisting}[frame=none]
 public <any> getLabel()\end{lstlisting} %end signature
+                                        \begin{itemize}
+                                            \item{
+                                                    {\bf  Описание}
+
+                                                Получить название эмоции
+                                            }
+                                        \end{itemize}
                                     }%end item
                                     \item{
                                         \index{getOutput()}
                                         {\bf  getOutput}\\
                                         \begin{lstlisting}[frame=none]
 public <any> getOutput()\end{lstlisting} %end signature
+                                        \begin{itemize}
+                                            \item{
+                                                    {\bf  Описание}
+
+                                                Получить вектор с вероятностями эмоций
+                                            }
+                                        \end{itemize}
                                     }%end item
                                     \item{
                                         \index{setFaceRect(RectF)}
                                         {\bf  setFaceRect}\\
                                         \begin{lstlisting}[frame=none]
 public void setFaceRect(RectF faceRect)\end{lstlisting} %end signature
+                                        \begin{itemize}
+                                            \item{
+                                                    {\bf  Описание}
+
+                                                Записать прямоугольник границ лица
+                                            }
+                                        \end{itemize}
                                     }%end item
                                     \item{
                                         \index{setImageSize(Size)}
                                         {\bf  setImageSize}\\
                                         \begin{lstlisting}[frame=none]
 public void setImageSize(Size imageSize)\end{lstlisting} %end signature
+                                        \begin{itemize}
+                                            \item{
+                                                    {\bf  Описание}
+
+                                                Записать размер изображения
+                                            }
+                                        \end{itemize}
                                     }%end item
                                     \item{
                                         \index{setLabel(String)}
                                         {\bf  setLabel}\\
                                         \begin{lstlisting}[frame=none]
 public void setLabel(java.lang.String label)\end{lstlisting} %end signature
+                                        \begin{itemize}
+                                            \item{
+                                                    {\bf  Описание}
+
+                                                Записать название эмоции
+                                            }
+                                        \end{itemize}
                                     }%end item
                                     \item{
                                         \index{setOutput(float\lbrack \rbrack )}
                                         {\bf  setOutput}\\
                                         \begin{lstlisting}[frame=none]
 public void setOutput(float[] output)\end{lstlisting} %end signature
+                                        \begin{itemize}
+                                            \item{
+                                                    {\bf  Описание}
+
+                                                Записать вектор с вероятностями эмоций
+                                            }
+                                        \end{itemize}
                                     }%end item
                                 \end{itemize}
                             }
                         }
-                    }
 \end{document}
