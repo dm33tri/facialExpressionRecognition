@@ -7,9 +7,21 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 public class FacialExpressionViewModel extends ViewModel {
+    /**
+     * Надпись с классом, который наиболее вероятен
+     */
     private final MutableLiveData<String> label = new MutableLiveData<>("");
+    /**
+     * Прямоугольник, обозначающий границы лица на изображении
+     */
     private final MutableLiveData<RectF> faceRect = new MutableLiveData<>();
+    /**
+     * Размер обрабатываемого изображения
+     */
     private final MutableLiveData<Size> imageSize = new MutableLiveData<>();
+    /**
+     * Вектор с вероятностями эмоций
+     */
     private final MutableLiveData<float[]> output = new MutableLiveData<>();
 
     public void setFaceRect(RectF faceRect) {

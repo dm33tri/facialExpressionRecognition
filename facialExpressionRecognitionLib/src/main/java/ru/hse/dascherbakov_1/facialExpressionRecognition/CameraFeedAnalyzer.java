@@ -28,11 +28,23 @@ import org.pytorch.IValue;
 import org.pytorch.Module;
 import org.pytorch.Tensor;
 
+/**
+ * Класс анализатора изображения
+ */
 public class CameraFeedAnalyzer implements Analyzer {
     public final static String[] classes = { "Angry", "Disgust", "Fear", "Happy", "Sad", "Surprised", "Neutral" };
 
+    /**
+     * Визуальный виджет для передачи информации
+     */
     private final CameraFeedView cameraFeedView;
+    /**
+     * Определитель лица
+     */
     private final FaceDetector detector;
+    /**
+     * Загруженная TorchScript модель
+     */
     private final Module module;
 
     public CameraFeedAnalyzer(CameraFeedView cameraFeedView) {
@@ -42,6 +54,9 @@ public class CameraFeedAnalyzer implements Analyzer {
         this.module = Module.load(unpackModel());
     }
 
+    /**
+     * Основной метод для анализа
+     */
     @Override
     @androidx.camera.core.ExperimentalGetImage
     public void analyze(@NonNull ImageProxy imageProxy) {
@@ -76,6 +91,9 @@ public class CameraFeedAnalyzer implements Analyzer {
         }
     }
 
+    /**
+     * Получение прямоугольника лица
+     */
     private Rect getFaceRect(Face face, int width, int height) {
         Rect bounds = face.getBoundingBox();
         bounds.left = Math.max(0, bounds.left - 10);
@@ -85,6 +103,9 @@ public class CameraFeedAnalyzer implements Analyzer {
         return bounds;
     }
 
+    /**
+     * Получение наиболее вероятного класса
+     */
     private String getStringResult(float[] output) {
         int maxIndex = 0;
         float max = output[maxIndex];
@@ -98,10 +119,16 @@ public class CameraFeedAnalyzer implements Analyzer {
         return classes[maxIndex];
     }
 
+    /**
+     * Получение вероятностей классов
+     */
     private float[] getResult(Tensor outputTensor) {
         return outputTensor.getDataAsFloatArray();
     }
 
+    /**
+     * Перевод картинки в тензор
+     */
     private Tensor getTensor(Image image, Rect face) {
         int[] buffer = getImage(image, face);
         float[] floatBuffer = new float[buffer.length];
@@ -111,6 +138,9 @@ public class CameraFeedAnalyzer implements Analyzer {
         return Tensor.fromBlob(floatBuffer, new long[] { 1, 1, 44, 44 });
     }
 
+    /**
+     * Перевод YUV_420_888 в набор пикселей RGBA_888
+     */
     private int[] getImage(Image image, Rect face) {
         ByteBuffer byteBuffer = image.getPlanes()[0].getBuffer();
         int[] buffer = new int[44 * 44];
@@ -133,6 +163,9 @@ public class CameraFeedAnalyzer implements Analyzer {
         return buffer;
     }
 
+    /**
+     * Извлечение файла модели
+     */
     private String unpackModel() {
         File file = new File(cameraFeedView.getContext().getFilesDir(), "model.pt");
 
@@ -151,6 +184,9 @@ public class CameraFeedAnalyzer implements Analyzer {
         return null;
     }
 
+    /**
+     * Получить анализатор для подключения к камере
+     */
     public static ImageAnalysis buildAnalysis(CameraFeedView cameraFeedView) {
         int width = cameraFeedView.getView().getWidth();
         int height = cameraFeedView.getView().getHeight();

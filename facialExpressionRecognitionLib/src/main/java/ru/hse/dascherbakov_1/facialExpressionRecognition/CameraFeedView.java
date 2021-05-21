@@ -26,16 +26,37 @@ import java.util.concurrent.ExecutionException;
  * Фрагмент для предпросмотра изображения с камеры и анализа эмоций по изображению лица в реальном времени
  */
 public class CameraFeedView extends Fragment {
+    /**
+     * Объект для работы с камерой телефона
+     */
     private ProcessCameraProvider cameraProvider;
+    /**
+     * Анализатор изображения
+     */
     private ImageAnalysis faceAnalyzer;
+    /**
+     * Виджет для отображения картинки с камеры
+     */
     private PreviewView previewView;
+    /**
+     * Виджет для помещения дополнительной информации поверх картинки с камеры
+     */
     private OverlayView overlayView;
+    /**
+     * ViewModel для чтения данных, полученных из анализатора
+     */
     private FacialExpressionViewModel viewModel;
 
+    /**
+     * Получение класса ViewModel
+     */
     public FacialExpressionViewModel getViewModel() {
         return viewModel;
     }
 
+    /**
+     * Метод, выполняемый после инициализации визуальных виджетов фрагмента
+     */
     @Override
     public void onViewCreated(@NotNull View view, Bundle bundle) {
         super.onViewCreated(view, bundle);

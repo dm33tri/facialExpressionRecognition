@@ -6,7 +6,6 @@
 \usepackage[headings]{fullpage}
 \usepackage{listings}
 \lstset{language=Java,breaklines=true}
-
 \ifpdf \usepackage[pdftex, pdfpagemode={UseOutlines},bookmarks,colorlinks,linkcolor={blue},plainpages=false,pdfpagelabels,citecolor={red},breaklinks=true]{hyperref}
   \usepackage[pdftex]{graphicx}
   \pdfcompresslevel=9
@@ -43,41 +42,55 @@
 \sloppy
 \addtocontents{toc}{\protect\markboth{Contents}{Contents}}
 \tableofcontents
-\chapter{Package ru.hse.d\_shcherbakov1.facialExpressionRecognition}{
-\label{ru.hse.d_shcherbakov1.facialExpressionRecognition}\hskip -.05in
+\chapter{Package ru.hse.dascherbakov\_1.facialExpressionRecognition}{
+\label{ru.hse.dascherbakov_1.facialExpressionRecognition}\hskip -.05in
 \hbox to \hsize{\textit{ Package Contents\hfil Page}}
 \vskip .13in
 \hbox{{\bf  Classes}}
-\entityintro{CameraFeedAnalyzer}{ru.hse.d_shcherbakov1.facialExpressionRecognition.CameraFeedAnalyzer}{}
-\entityintro{FaceAnalyzer}{ru.hse.d_shcherbakov1.facialExpressionRecognition.FaceAnalyzer}{}
-\entityintro{OverlayView}{ru.hse.d_shcherbakov1.facialExpressionRecognition.OverlayView}{Виджет для отображения рамки вокруг лица и надписи с названием текущей эмоции}
+\entityintro{CameraFeedAnalyzer}{ru.hse.dascherbakov_1.facialExpressionRecognition.CameraFeedAnalyzer}{Класс анализатора изображения}
+\entityintro{CameraFeedView}{ru.hse.dascherbakov_1.facialExpressionRecognition.CameraFeedView}{Фрагмент для предпросмотра изображения с камеры и анализа эмоций по изображению лица в реальном времени}
+\entityintro{FacialExpressionViewModel}{ru.hse.dascherbakov_1.facialExpressionRecognition.FacialExpressionViewModel}{}
 \vskip .1in
 \vskip .1in
-\section{\label{ru.hse.d_shcherbakov1.facialExpressionRecognition.CameraFeedAnalyzer}\index{CameraFeedAnalyzer}Class CameraFeedAnalyzer}{
+\section{\label{ru.hse.dascherbakov_1.facialExpressionRecognition.CameraFeedAnalyzer}\index{CameraFeedAnalyzer}Class CameraFeedAnalyzer}{
 \vskip .1in 
+Класс анализатора изображения\vskip .1in 
 \subsection{Declaration}{
 \begin{lstlisting}[frame=none]
 public class CameraFeedAnalyzer
  extends java.lang.Object\end{lstlisting}
+\subsection{Field summary}{
+\begin{verse}
+{\bf classes} \\
+\end{verse}
+}
 \subsection{Constructor summary}{
 \begin{verse}
-{\bf CameraFeedAnalyzer(Context, OverlayView)} \\
+{\bf CameraFeedAnalyzer(CameraFeedView)} \\
 \end{verse}
 }
 \subsection{Method summary}{
 \begin{verse}
-{\bf analyze(ImageProxy)} \\
-{\bf buildAnalysis(Context, OverlayView)} \\
+{\bf analyze(ImageProxy)} Основной метод для анализа\\
+{\bf buildAnalysis(CameraFeedView)} Получить анализатор для подключения к камере\\
 \end{verse}
+}
+\subsection{Fields}{
+\begin{itemize}
+\item{
+\index{classes}
+\label{ru.hse.dascherbakov_1.facialExpressionRecognition.CameraFeedAnalyzer.classes}\texttt{public static final java.lang.String\lbrack \rbrack \ {\bf  classes}}
+}
+\end{itemize}
 }
 \subsection{Constructors}{
 \vskip -2em
 \begin{itemize}
 \item{ 
-\index{CameraFeedAnalyzer(Context, OverlayView)}
+\index{CameraFeedAnalyzer(CameraFeedView)}
 {\bf  CameraFeedAnalyzer}\\
 \begin{lstlisting}[frame=none]
-public CameraFeedAnalyzer(Context context,OverlayView overlayView)\end{lstlisting} %end signature
+public CameraFeedAnalyzer(CameraFeedView cameraFeedView)\end{lstlisting} %end signature
 }%end item
 \end{itemize}
 }
@@ -89,175 +102,210 @@ public CameraFeedAnalyzer(Context context,OverlayView overlayView)\end{lstlistin
 {\bf  analyze}\\
 \begin{lstlisting}[frame=none]
 public void analyze(ImageProxy imageProxy)\end{lstlisting} %end signature
-}%end item
-\item{ 
-\index{buildAnalysis(Context, OverlayView)}
-{\bf  buildAnalysis}\\
-\begin{lstlisting}[frame=none]
-public static ImageAnalysis buildAnalysis(Context context,OverlayView overlayView)\end{lstlisting} %end signature
-}%end item
-\end{itemize}
-}
-}
-\section{\label{ru.hse.d_shcherbakov1.facialExpressionRecognition.FaceAnalyzer}\index{FaceAnalyzer}Class FaceAnalyzer}{
-\vskip .1in 
-\subsection{Declaration}{
-\begin{lstlisting}[frame=none]
-public class FaceAnalyzer
- extends java.lang.Object\end{lstlisting}
-\subsection{Constructor summary}{
-\begin{verse}
-{\bf FaceAnalyzer(Context, OverlayView)} \\
-\end{verse}
-}
-\subsection{Method summary}{
-\begin{verse}
-{\bf analyze(ImageProxy)} \\
-{\bf buildAnalysis(Context, OverlayView)} \\
-\end{verse}
-}
-\subsection{Constructors}{
-\vskip -2em
-\begin{itemize}
-\item{ 
-\index{FaceAnalyzer(Context, OverlayView)}
-{\bf  FaceAnalyzer}\\
-\begin{lstlisting}[frame=none]
-public FaceAnalyzer(Context context,OverlayView overlayView)\end{lstlisting} %end signature
-}%end item
-\end{itemize}
-}
-\subsection{Methods}{
-\vskip -2em
-\begin{itemize}
-\item{ 
-\index{analyze(ImageProxy)}
-{\bf  analyze}\\
-\begin{lstlisting}[frame=none]
-public void analyze(ImageProxy imageProxy)\end{lstlisting} %end signature
-}%end item
-\item{ 
-\index{buildAnalysis(Context, OverlayView)}
-{\bf  buildAnalysis}\\
-\begin{lstlisting}[frame=none]
-public static ImageAnalysis buildAnalysis(Context context,OverlayView overlayView)\end{lstlisting} %end signature
-}%end item
-\end{itemize}
-}
-}
-\section{\label{ru.hse.d_shcherbakov1.facialExpressionRecognition.OverlayView}\index{OverlayView}Class OverlayView}{
-\vskip .1in 
-Виджет для отображения рамки вокруг лица и надписи с названием текущей эмоции\vskip .1in 
-\subsection{Declaration}{
-\begin{lstlisting}[frame=none]
-public class OverlayView
- extends PreviewView\end{lstlisting}
-\subsection{Constructor summary}{
-\begin{verse}
-{\bf OverlayView(Context, AttributeSet)} \\
-\end{verse}
-}
-\subsection{Method summary}{
-\begin{verse}
-{\bf onDraw(Canvas)} Метод жизненного цикла для рисования виджета\\
-{\bf setFaceImage(int\lbrack \rbrack )} \\
-{\bf setImageSize(Size)} Задать размер изображения с камеры\\
-{\bf setLabel(String)} Задать надпись\\
-{\bf setRect(RectF)} Задать прямоугольник с рамкой вокруг лица\\
-\end{verse}
-}
-\subsection{Constructors}{
-\vskip -2em
-\begin{itemize}
-\item{ 
-\index{OverlayView(Context, AttributeSet)}
-{\bf  OverlayView}\\
-\begin{lstlisting}[frame=none]
-public OverlayView(Context context,AttributeSet attrs)\end{lstlisting} %end signature
-}%end item
-\end{itemize}
-}
-\subsection{Methods}{
-\vskip -2em
-\begin{itemize}
-\item{ 
-\index{onDraw(Canvas)}
-{\bf  onDraw}\\
-\begin{lstlisting}[frame=none]
-protected void onDraw(Canvas canvas)\end{lstlisting} %end signature
 \begin{itemize}
 \item{
 {\bf  Description}
 
-Метод жизненного цикла для рисования виджета
+Основной метод для анализа
 }
 \end{itemize}
 }%end item
 \item{ 
-\index{setFaceImage(int\lbrack \rbrack )}
-{\bf  setFaceImage}\\
+\index{buildAnalysis(CameraFeedView)}
+{\bf  buildAnalysis}\\
 \begin{lstlisting}[frame=none]
-public void setFaceImage(int[] data)\end{lstlisting} %end signature
+public static ImageAnalysis buildAnalysis(CameraFeedView cameraFeedView)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Получить анализатор для подключения к камере
+}
+\end{itemize}
+}%end item
+\end{itemize}
+}
+}
+\section{\label{ru.hse.dascherbakov_1.facialExpressionRecognition.CameraFeedView}\index{CameraFeedView}Class CameraFeedView}{
+\vskip .1in 
+Фрагмент для предпросмотра изображения с камеры и анализа эмоций по изображению лица в реальном времени\vskip .1in 
+\subsection{Declaration}{
+\begin{lstlisting}[frame=none]
+public class CameraFeedView
+ extends Fragment\end{lstlisting}
+\subsection{Constructor summary}{
+\begin{verse}
+{\bf CameraFeedView()} \\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf getViewModel()} Получение класса ViewModel\\
+{\bf onActivityCreated(Bundle)} Завершение создания фрагмента\\
+{\bf onCreateView(LayoutInflater, ViewGroup, Bundle)} Инициализация визуальных виджетов фрагмента\\
+{\bf onViewCreated(View, Bundle)} Метод, выполняемый после инициализации визуальных виджетов фрагмента\\
+{\bf setOnClickListener(View.OnClickListener)} \\
+\end{verse}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{CameraFeedView()}
+{\bf  CameraFeedView}\\
+\begin{lstlisting}[frame=none]
+public CameraFeedView()\end{lstlisting} %end signature
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{getViewModel()}
+{\bf  getViewModel}\\
+\begin{lstlisting}[frame=none]
+public FacialExpressionViewModel getViewModel()\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Получение класса ViewModel
+}
+\end{itemize}
+}%end item
+\item{ 
+\index{onActivityCreated(Bundle)}
+{\bf  onActivityCreated}\\
+\begin{lstlisting}[frame=none]
+public void onActivityCreated(Bundle savedInstance)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Завершение создания фрагмента
+}
+\end{itemize}
+}%end item
+\item{ 
+\index{onCreateView(LayoutInflater, ViewGroup, Bundle)}
+{\bf  onCreateView}\\
+\begin{lstlisting}[frame=none]
+public View onCreateView(LayoutInflater inflater,ViewGroup viewGroup,Bundle bundle)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Инициализация визуальных виджетов фрагмента
+}
+\end{itemize}
+}%end item
+\item{ 
+\index{onViewCreated(View, Bundle)}
+{\bf  onViewCreated}\\
+\begin{lstlisting}[frame=none]
+public void onViewCreated(View view,Bundle bundle)\end{lstlisting} %end signature
+\begin{itemize}
+\item{
+{\bf  Description}
+
+Метод, выполняемый после инициализации визуальных виджетов фрагмента
+}
+\end{itemize}
+}%end item
+\item{ 
+\index{setOnClickListener(View.OnClickListener)}
+{\bf  setOnClickListener}\\
+\begin{lstlisting}[frame=none]
+public void setOnClickListener(View.OnClickListener listener)\end{lstlisting} %end signature
+}%end item
+\end{itemize}
+}
+}
+\section{\label{ru.hse.dascherbakov_1.facialExpressionRecognition.FacialExpressionViewModel}\index{FacialExpressionViewModel}Class FacialExpressionViewModel}{
+\vskip .1in 
+\subsection{Declaration}{
+\begin{lstlisting}[frame=none]
+public class FacialExpressionViewModel
+ extends ViewModel\end{lstlisting}
+\subsection{Constructor summary}{
+\begin{verse}
+{\bf FacialExpressionViewModel()} \\
+\end{verse}
+}
+\subsection{Method summary}{
+\begin{verse}
+{\bf getFaceRect()} \\
+{\bf getImageSize()} \\
+{\bf getLabel()} \\
+{\bf getOutput()} \\
+{\bf setFaceRect(RectF)} \\
+{\bf setImageSize(Size)} \\
+{\bf setLabel(String)} \\
+{\bf setOutput(float\lbrack \rbrack )} \\
+\end{verse}
+}
+\subsection{Constructors}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{FacialExpressionViewModel()}
+{\bf  FacialExpressionViewModel}\\
+\begin{lstlisting}[frame=none]
+public FacialExpressionViewModel()\end{lstlisting} %end signature
+}%end item
+\end{itemize}
+}
+\subsection{Methods}{
+\vskip -2em
+\begin{itemize}
+\item{ 
+\index{getFaceRect()}
+{\bf  getFaceRect}\\
+\begin{lstlisting}[frame=none]
+public <any> getFaceRect()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getImageSize()}
+{\bf  getImageSize}\\
+\begin{lstlisting}[frame=none]
+public <any> getImageSize()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getLabel()}
+{\bf  getLabel}\\
+\begin{lstlisting}[frame=none]
+public <any> getLabel()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{getOutput()}
+{\bf  getOutput}\\
+\begin{lstlisting}[frame=none]
+public <any> getOutput()\end{lstlisting} %end signature
+}%end item
+\item{ 
+\index{setFaceRect(RectF)}
+{\bf  setFaceRect}\\
+\begin{lstlisting}[frame=none]
+public void setFaceRect(RectF faceRect)\end{lstlisting} %end signature
 }%end item
 \item{ 
 \index{setImageSize(Size)}
 {\bf  setImageSize}\\
 \begin{lstlisting}[frame=none]
 public void setImageSize(Size imageSize)\end{lstlisting} %end signature
-\begin{itemize}
-\item{
-{\bf  Description}
-
-Задать размер изображения с камеры
-}
-\item{
-{\bf  Parameters}
-  \begin{itemize}
-   \item{
-\texttt{imageSize} -- размер изображения}
-  \end{itemize}
-}%end item
-\end{itemize}
 }%end item
 \item{ 
 \index{setLabel(String)}
 {\bf  setLabel}\\
 \begin{lstlisting}[frame=none]
 public void setLabel(java.lang.String label)\end{lstlisting} %end signature
-\begin{itemize}
-\item{
-{\bf  Description}
-
-Задать надпись
-}
-\item{
-{\bf  Parameters}
-  \begin{itemize}
-   \item{
-\texttt{label} -- надпись}
-  \end{itemize}
-}%end item
-\end{itemize}
 }%end item
 \item{ 
-\index{setRect(RectF)}
-{\bf  setRect}\\
+\index{setOutput(float\lbrack \rbrack )}
+{\bf  setOutput}\\
 \begin{lstlisting}[frame=none]
-public void setRect(RectF rect)\end{lstlisting} %end signature
-\begin{itemize}
-\item{
-{\bf  Description}
-
-Задать прямоугольник с рамкой вокруг лица
-}
-\item{
-{\bf  Parameters}
-  \begin{itemize}
-   \item{
-\texttt{rect} -- прямоугольник}
-  \end{itemize}
-}%end item
-\end{itemize}
+public void setOutput(float[] output)\end{lstlisting} %end signature
 }%end item
 \end{itemize}
 }
