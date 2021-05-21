@@ -215,10 +215,12 @@
 
     \addition{Используемые понятия и определения}
     \begin{itemize}
-        \item Тензор
-        \item Сверточная нейронная сеть
-        \item Функция активации
-        \item Формат изображений YUV\_420\_888
+        \item Тензор -- математический объект, в случае данного модуля удобно понимать его как многоиндексный набор компонент.
+        \item Сверточная нейронная сеть -- математическая модель, которая работает по принципу биологических нейронных сетей, то есть с помощью нейронов,
+            преобразующих и передающих сигнал друг другу, в которой используется операция свертки, то есть матричного умножения рядом стоящих нейронов.
+            Такие модели хорошо подходят для обработки изображений, так как используют пространственное расположение нейронов.
+        \item Формат изображений YUV\_420\_888 -- формат с цветовой моделью YUV, содержащей три компонента: яркость и два цветоразностных компонента.
+            420 обозначает формат дискретизации сигнала 4:2:0, когда на каджые 4 пикселя с яркостью по 1 цветовому пикселю каждого слоя.
     \end{itemize}
 
     \addition{Описание и функциональное назначение классов и структур}
@@ -249,11 +251,10 @@
     \begin{document}
         \sloppy
         \addtocontents{toc}{\protect\markboth{Contents}{Contents}}
-        \chapter{Package ru.hse.dascherbakov\_1.facialExpressionRecognition}{
+        \chapter{Пакет ru.hse.dascherbakov\_1.facialExpressionRecognition}{
             \label{ru.hse.dascherbakov_1.facialExpressionRecognition}\hskip -.05in
-            \hbox to \hsize{\textit{ Package Contents\hfil Page}}
             \vskip .13in
-            \hbox{{\bf  Classes}}
+            \hbox{{\bf  Классы}}
             \entityintro{CameraFeedAnalyzer}{ru.hse.dascherbakov_1.facialExpressionRecognition.CameraFeedAnalyzer}{Класс анализатора изображения}
             \entityintro{CameraFeedView}{ru.hse.dascherbakov_1.facialExpressionRecognition.CameraFeedView}{Фрагмент для предпросмотра изображения с камеры и анализа эмоций по изображению лица в реальном времени}
             \entityintro{FacialExpressionViewModel}{ru.hse.dascherbakov_1.facialExpressionRecognition.FacialExpressionViewModel}{}
@@ -262,31 +263,31 @@
             \section{\label{ru.hse.dascherbakov_1.facialExpressionRecognition.CameraFeedAnalyzer}\index{CameraFeedAnalyzer}Class CameraFeedAnalyzer}{
                 \vskip .1in
                 Класс анализатора изображения\vskip .1in
-                \subsection{Declaration}{
+                \subsection{Определение}{
                     \begin{lstlisting}[frame=none]
 public class CameraFeedAnalyzer
  extends java.lang.Object\end{lstlisting}
-                    \subsection{Field summary}{
+                    \subsection{Поля}{
                         \begin{verse}
-                        {\bf classes} \\
+                        {\bf классы} \\
                         \end{verse}
                     }
-                    \subsection{Constructor summary}{
+                    \subsection{Конструктор}{
                         \begin{verse}
                         {\bf CameraFeedAnalyzer(CameraFeedView)} \\
                         \end{verse}
                     }
-                    \subsection{Method summary}{
+                    \subsection{Методы}{
                         \begin{verse}
                         {\bf analyze(ImageProxy)} Основной метод для анализа\\
                         {\bf buildAnalysis(CameraFeedView)} Получить анализатор для подключения к камере\\
                         \end{verse}
                     }
-                    \subsection{Fields}{
+                    \subsection{Поля}{
                         \begin{itemize}
-                            \item{
-                                \index{classes}
-                                \label{ru.hse.dascherbakov_1.facialExpressionRecognition.CameraFeedAnalyzer.classes}\texttt{public static final java.lang.String\lbrack \rbrack \ {\bf  classes}}
+                            \item{ ``` t
+                                \index{классы}
+                                \label{ru.hse.dascherbakov_1.facialExpressionRecognition.CameraFeedAnalyzer.классы}\texttt{public static final java.lang.String\lbrack \rbrack \ {\bf  classes}}
                             }
                         \end{itemize}
                     }
@@ -301,7 +302,7 @@ public CameraFeedAnalyzer(CameraFeedView cameraFeedView)\end{lstlisting} %end si
                             }%end item
                         \end{itemize}
                     }
-                    \subsection{Methods}{
+                    \subsection{Методы}{
                         \vskip -2em
                         \begin{itemize}
                             \item{
@@ -311,7 +312,7 @@ public CameraFeedAnalyzer(CameraFeedView cameraFeedView)\end{lstlisting} %end si
 public void analyze(ImageProxy imageProxy)\end{lstlisting} %end signature
                                 \begin{itemize}
                                     \item{
-                                            {\bf  Description}
+                                            {\bf  Описание}
 
                                         Основной метод для анализа
                                     }
@@ -324,7 +325,7 @@ public void analyze(ImageProxy imageProxy)\end{lstlisting} %end signature
 public static ImageAnalysis buildAnalysis(CameraFeedView cameraFeedView)\end{lstlisting} %end signature
                                 \begin{itemize}
                                     \item{
-                                            {\bf  Description}
+                                            {\bf  Описание}
 
                                         Получить анализатор для подключения к камере
                                     }
@@ -336,16 +337,16 @@ public static ImageAnalysis buildAnalysis(CameraFeedView cameraFeedView)\end{lst
                 \section{\label{ru.hse.dascherbakov_1.facialExpressionRecognition.CameraFeedView}\index{CameraFeedView}Class CameraFeedView}{
                     \vskip .1in
                     Фрагмент для предпросмотра изображения с камеры и анализа эмоций по изображению лица в реальном времени\vskip .1in
-                    \subsection{Declaration}{
+                    \subsection{Определение}{
                         \begin{lstlisting}[frame=none]
 public class CameraFeedView
  extends Fragment\end{lstlisting}
-                        \subsection{Constructor summary}{
+                        \subsection{Конструктор}{
                             \begin{verse}
                             {\bf CameraFeedView()} \\
                             \end{verse}
                         }
-                        \subsection{Method summary}{
+                        \subsection{Методы}{
                             \begin{verse}
                             {\bf getViewModel()} Получение класса ViewModel\\
                             {\bf onActivityCreated(Bundle)} Завершение создания фрагмента\\
@@ -365,7 +366,7 @@ public CameraFeedView()\end{lstlisting} %end signature
                                 }%end item
                             \end{itemize}
                         }
-                        \subsection{Methods}{
+                        \subsection{Методы}{
                             \vskip -2em
                             \begin{itemize}
                                 \item{
@@ -375,7 +376,7 @@ public CameraFeedView()\end{lstlisting} %end signature
 public FacialExpressionViewModel getViewModel()\end{lstlisting} %end signature
                                     \begin{itemize}
                                         \item{
-                                                {\bf  Description}
+                                                {\bf  Описание}
 
                                             Получение класса ViewModel
                                         }
@@ -388,7 +389,7 @@ public FacialExpressionViewModel getViewModel()\end{lstlisting} %end signature
 public void onActivityCreated(Bundle savedInstance)\end{lstlisting} %end signature
                                     \begin{itemize}
                                         \item{
-                                                {\bf  Description}
+                                                {\bf  Описание}
 
                                             Завершение создания фрагмента
                                         }
@@ -401,7 +402,7 @@ public void onActivityCreated(Bundle savedInstance)\end{lstlisting} %end signatu
 public View onCreateView(LayoutInflater inflater,ViewGroup viewGroup,Bundle bundle)\end{lstlisting} %end signature
                                     \begin{itemize}
                                         \item{
-                                                {\bf  Description}
+                                                {\bf  Описание}
 
                                             Инициализация визуальных виджетов фрагмента
                                         }
@@ -414,7 +415,7 @@ public View onCreateView(LayoutInflater inflater,ViewGroup viewGroup,Bundle bund
 public void onViewCreated(View view,Bundle bundle)\end{lstlisting} %end signature
                                     \begin{itemize}
                                         \item{
-                                                {\bf  Description}
+                                                {\bf  Описание}
 
                                             Метод, выполняемый после инициализации визуальных виджетов фрагмента
                                         }
@@ -431,16 +432,16 @@ public void setOnClickListener(View.OnClickListener listener)\end{lstlisting} %e
                     }
                     \section{\label{ru.hse.dascherbakov_1.facialExpressionRecognition.FacialExpressionViewModel}\index{FacialExpressionViewModel}Class FacialExpressionViewModel}{
                         \vskip .1in
-                        \subsection{Declaration}{
+                        \subsection{Определение}{
                             \begin{lstlisting}[frame=none]
 public class FacialExpressionViewModel
  extends ViewModel\end{lstlisting}
-                            \subsection{Constructor summary}{
+                            \subsection{Конструктор}{
                                 \begin{verse}
                                 {\bf FacialExpressionViewModel()} \\
                                 \end{verse}
                             }
-                            \subsection{Method summary}{
+                            \subsection{Методы}{
                                 \begin{verse}
                                 {\bf getFaceRect()} \\
                                 {\bf getImageSize()} \\
@@ -463,7 +464,7 @@ public FacialExpressionViewModel()\end{lstlisting} %end signature
                                     }%end item
                                 \end{itemize}
                             }
-                            \subsection{Methods}{
+                            \subsection{Методы}{
                                 \vskip -2em
                                 \begin{itemize}
                                     \item{
